@@ -1,9 +1,19 @@
 """
 Script to explore the dataset
 """
-
+import os
 import click
 import pandas as pd
+
+
+class filters_movies:
+
+    def __init__(self, df):
+        self.df = df
+
+    def get_movies_year(self, year):
+        return self.df[self.df['Year'] == int(year)]
+
 
 
 @click.command(short_help="script to explore the film genre datset")
@@ -11,14 +21,28 @@ import pandas as pd
     "--dataset", "-d", type=str, required=True, help="Path to the dataset file."
 )
 @click.option(
-    "--output", "-o", help="Output file if we have something."
+    "--year", "-y", help="Year to filter but to get the number of movies released."
 )
-def main(dataset, output):
+@click.option(
+    "--output", "-o", help="Output file if we have something.", default='datasets'
+)
+def main(dataset, year, output):
     """
     Explore dataset and call other functions
     """
+
+    df = pd.read_csv(dataset)
     import pdb;pdb.set_trace()
 
+    if year:
+        try:
+            df = filters_movies(df).get_movies_year(year)
+
+        except TypeError as e:
+            raise TypeError(f'The parameter year was not found: {e}')
+
+    out_path = os.join.path(output, f'film_genre_{year}.csv')
+    df.to_csv(out_path, sep=',', index=None)
 
 if __name__ == '__main__':
     main()
