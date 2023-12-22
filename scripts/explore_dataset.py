@@ -15,6 +15,11 @@ class filters_movies:
         return self.df[self.df['Year'] == int(year)]
 
 
+class computations_movies(filters_movies):
+
+    def sum_movies_released(self):
+        return self.df['Movies Released'].sum()
+
 
 @click.command(short_help="script to explore the film genre datset")
 @click.option(
@@ -37,12 +42,14 @@ def main(dataset, year, output):
     if year:
         try:
             df = filters_movies(df).get_movies_year(year)
-
         except TypeError as e:
             raise TypeError(f'The parameter year was not found: {e}')
 
-    out_path = os.join.path(output, f'film_genre_{year}.csv')
+    print(computations_movies(df).sum_movies_released())
+
+    out_path = os.path.join(output, f'film_genre_{year}.csv')
     df.to_csv(out_path, sep=',', index=None)
+
 
 if __name__ == '__main__':
     main()
