@@ -5,6 +5,7 @@ import os
 import click
 import pandas as pd
 
+MAX_ALLOWED_ROWS = 100000
 
 class filters_movies:
 
@@ -19,6 +20,31 @@ class computations_movies(filters_movies):
 
     def sum_movies_released(self):
         return self.df['Movies Released'].sum()
+
+
+def check_columns(df):
+    """
+    Check number of rows does not exceeds our limit
+    """
+
+    if df.shape[0] > MAX_ALLOWED_ROWS:
+        raise ValueError("Number of rows is too large")
+
+
+def load_dataset(dataset):
+    """
+    Load input dataset with pandas
+    """
+
+    extension = dataset.rsplit('.')[-1]
+    if extension != 'csv':
+        raise TypeError("The file needs to be a csv")
+
+    df = pd.read_csv(dataset)
+
+    check_columns(df)
+
+    return df
 
 
 @click.command(short_help="script to explore the film genre datset")
@@ -36,7 +62,7 @@ def main(dataset, year, output):
     Explore dataset and call other functions
     """
 
-    df = pd.read_csv(dataset)
+    df = load_dataset(dataset)
     import pdb;pdb.set_trace()
 
     if year:
