@@ -4,4 +4,5 @@ max-line-length = 100
 exclude =
     __pycache__,
     README.md,
-    requirements.txt
+    requirements.txt,
+    Makefile

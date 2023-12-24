@@ -3,4 +3,5 @@
 ignore =
     __pycache__,
     README.md,
-    requirements.txt
+    requirements.txt,
+    Makefile
