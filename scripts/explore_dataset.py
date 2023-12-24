@@ -7,18 +7,31 @@ import pandas as pd
 
 MAX_ALLOWED_ROWS = 100000
 
-class filters_movies:
+
+class FiltersMovies():  # pylint: disable=R0903
+    """
+    Class to provide functions for filtering movies
+    """
 
     def __init__(self, df):
         self.df = df
 
     def get_movies_year(self, year):
+        """
+        Get movies for a given year
+        """
         return self.df[self.df['Year'] == int(year)]
 
 
-class computations_movies(filters_movies):
+class ComputationsMovies(FiltersMovies):
+    """
+    Functions to perform computations in movies
+    """
 
     def sum_movies_released(self):
+        """
+        Sum the number of released movies
+        """
         return self.df['Movies Released'].sum()
 
 
@@ -57,21 +70,20 @@ def load_dataset(dataset):
 @click.option(
     "--output", "-o", help="Output file if we have something.", default='datasets'
 )
-def main(dataset, year, output):
+def main(dataset=None, year=None, output=None):
     """
     Explore dataset and call other functions
     """
 
     df = load_dataset(dataset)
-    import pdb;pdb.set_trace()
 
     if year:
         try:
-            df = filters_movies(df).get_movies_year(year)
+            df = FiltersMovies(df).get_movies_year(year)
         except TypeError as e:
-            raise TypeError(f'The parameter year was not found: {e}')
+            raise TypeError(f'The parameter year was not found: {e}') from e
 
-    print(computations_movies(df).sum_movies_released())
+    print(ComputationsMovies(df).sum_movies_released())
 
     out_path = os.path.join(output, f'film_genre_{year}.csv')
     df.to_csv(out_path, sep=',', index=None)
