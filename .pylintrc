@@ -2,4 +2,5 @@
 [MASTER]
 ignore =
     __pycache__,
-    README.md
+    README.md,
+    requirements.txt
