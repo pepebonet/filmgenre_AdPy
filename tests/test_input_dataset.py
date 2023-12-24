@@ -21,7 +21,6 @@ class DatasetInput(unittest.TestCase):
         with self.assertRaises(TypeError):
             ed.load_dataset('datasets/FilmGenreStats.cwsv')
 
-
     def test_dataset_dimensions(self):
         """
         Test number of columns and rows of the dataset

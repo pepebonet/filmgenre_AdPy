@@ -1,0 +1,5 @@
+
+[MASTER]
+ignore =
+    __pycache__,
+    README.md
