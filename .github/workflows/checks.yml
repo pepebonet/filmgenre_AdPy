@@ -11,10 +11,13 @@
                 - name: Checkout
                   uses: actions/checkout@v2
                 - name: Install dependencies
-                  run: pip install --upgrade pip && pip install -r requirements.txt
+                  run: make install
                 - name: Test Unittest
-                  run: python -m unittest
+                  run: |
+                    make test
                 - name: Lint Pylint
-                  run: pylint *
-                - name: Lint Flake8
-                  run: flake8 *
+                  run: |
+                    make pylint
+                - name: make flake8
+                  run: |
+                    make flake8
