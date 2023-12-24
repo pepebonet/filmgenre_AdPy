@@ -3,4 +3,5 @@
 max-line-length = 100
 exclude =
     __pycache__,
-    README.md
+    README.md,
+    requirements.txt
