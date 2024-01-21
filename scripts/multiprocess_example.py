@@ -17,7 +17,7 @@ if __name__ == '__main__':
     # Your multiprocessing code here
 
     # List of numbers
-    numbers = [50000 + x for x in range(100)]
+    numbers = [500 + x for x in range(100)]
 
     # With multiprocessing
     start_time = time.time()
